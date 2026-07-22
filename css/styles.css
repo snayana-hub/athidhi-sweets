@@ -497,3 +497,5 @@ details.menu-list-toggle[open] summary{margin-bottom:30px;background:var(--cream
 .brand{display:inline-flex;align-items:center;gap:9px}
 .brand-sweets{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--gold);font-weight:600;line-height:1}
 @media(max-width:640px){.brand-sweets{font-size:18px}}
+.cart-item .qty{width:auto;max-width:150px}
+.cart-item .qty input{flex:0 0 46px;width:46px;text-align:center}
