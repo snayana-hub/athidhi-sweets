@@ -26,21 +26,21 @@
   ];
   // Optional per-product image URLs (fill when photos are available); missing => branded placeholder.
   var IMAGES = {
-    "gulab-jamun":"assets/products/34-gulab-jamun.webp",
-    "rasmalai":"assets/products/35-rasmalai.webp",
+    "gulab-jamun":"assets/products/real-gulab-jamun.webp",
+    "rasmalai":"assets/products/real-rasmalai.webp",
     "gajar-ka-halwa":"assets/products/36-gajar-ka-halwa.webp",
     "mysore-pak":"assets/products/37-mysore-pak.webp",
     "kalakand":"assets/products/38-kalakand.webp",
-    "kova-jamun":"assets/products/39-kova-jamun.webp",
-    "bundi-laddu":"assets/products/40-bundi-laddu.webp",
-    "murukku":"assets/products/41-murukku.webp",
-    "navratan-mixture":"assets/products/42-navratan-mixture.webp",
-    "kala-jamun":"assets/products/43-kala-jamun.webp",
+    "kova-jamun":"assets/products/real-kova-jamun.webp",
+    "bundi-laddu":"assets/products/real-bundi-laddu.webp",
+    "murukku":"assets/products/real-murukku.webp",
+    "navratan-mixture":"assets/products/real-navratan-mixture.webp",
+    "kala-jamun":"assets/products/real-kala-jamun.webp",
     "sev-bhujiya":"assets/products/44-sev-bhujiya.webp",
     "jalebi":"assets/products/49-jalebi.webp",
     "besan-laddu":"assets/products/50-besan-laddu.webp",
     "kaju-katli":"assets/products/51-kaju-katli.webp",
-    "gujiya":"assets/products/52-gujiya.webp"
+    "gujiya":"assets/products/real-gujiya.webp"
   };
   // Optional per-product prices in EUR (fill when Siri provides); missing => "on request".
   var PRICES = {};
