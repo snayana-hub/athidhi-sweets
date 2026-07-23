@@ -44,7 +44,25 @@
   };
   // Optional per-product prices in EUR (fill when Siri provides); missing => "on request".
   var PRICES = {};
-  window.ATHIDHI_SWEETS = {PRODUCTS:PRODUCTS, IMAGES:IMAGES, PRICES:PRICES};
+  // ---- Ingredients per product (Zutaten), sourced from Siri's official product sheets ----
+  var INGREDIENTS = {
+    "gulab-jamun":{de:"Milchpulver, Weizenmehl, Zucker, Ghee (Butterfett), Pflanzenöl, Kardamom", en:"Milk powder, wheat flour, sugar, ghee (clarified butter), vegetable oil, cardamom"},
+    "rasmalai":{de:"Milch, Zucker, Sahne, Pistazien, Mandeln, Kardamom", en:"Milk, sugar, cream, pistachios, almonds, cardamom"},
+    "gajar-ka-halwa":{de:"Karotten, Milch, Zucker, Ghee (Butterfett), Cashewnüsse, Mandeln, Kardamom", en:"Carrots, milk, sugar, ghee (clarified butter), cashews, almonds, cardamom"},
+    "mysore-pak":{de:"Zucker, Kichererbsenmehl (Besan), Ghee (Butterfett), Wasser", en:"Sugar, gram flour (besan), ghee (clarified butter), water"},
+    "kalakand":{de:"Milch, Paneer (Frischkäse), Zucker, Kardamom, Pistazien", en:"Milk, paneer (fresh cheese), sugar, cardamom, pistachios"},
+    "kova-jamun":{de:"Khoya (Milchfeststoffe), Weizenmehl, Zucker, Ghee (Butterfett), Kardamom, Pflanzenöl", en:"Khoya (milk solids), wheat flour, sugar, ghee (clarified butter), cardamom, vegetable oil"},
+    "bundi-laddu":{de:"Kichererbsenmehl (Besan), Zucker, Ghee (Butterfett), Kardamom, Cashewnüsse, Rosinen", en:"Gram flour (besan), sugar, ghee (clarified butter), cardamom, cashews, raisins"},
+    "murukku":{de:"Reismehl, Urad Dal Mehl (schwarzes Linsenmehl), Butter oder Öl, Salz, Sesam, Kreuzkümmel, Wasser", en:"Rice flour, urad dal flour (black lentil flour), butter or oil, salt, sesame, cumin, water"},
+    "navratan-mixture":{de:"Kichererbsenmehl, Reismehl, Erdnüsse, Cashewnüsse, Curryblätter, Gewürze, Salz, Pflanzenöl", en:"Gram flour, rice flour, peanuts, cashews, curry leaves, spices, salt, vegetable oil"},
+    "kala-jamun":{de:"Milchpulver, Weizenmehl, Zucker, Ghee (Butterfett), Pflanzenöl, Kardamom", en:"Milk powder, wheat flour, sugar, ghee (clarified butter), vegetable oil, cardamom"},
+    "sev-bhujiya":{de:"Kichererbsenmehl (Besan), Pflanzenöl, Salz, Chili, Gewürze", en:"Gram flour (besan), vegetable oil, salt, chilli, spices"},
+    "jalebi":{de:"Weizenmehl, Zucker, Wasser, Joghurt, Pflanzenöl, Safran, Kardamom", en:"Wheat flour, sugar, water, yoghurt, vegetable oil, saffron, cardamom"},
+    "besan-laddu":{de:"Kichererbsenmehl (Besan), Zucker, Ghee (Butterfett), Kardamom, Cashewnüsse", en:"Gram flour (besan), sugar, ghee (clarified butter), cardamom, cashews"},
+    "kaju-katli":{de:"Cashewnüsse (Kaju), Zucker, Wasser, Ghee (optional), Rosenwasser (optional)", en:"Cashews (kaju), sugar, water, ghee (optional), rose water (optional)"},
+    "gujiya":{de:"Weizenmehl, Zucker, Khoya (Milchfeststoffe), Kokosraspeln, Mandeln, Cashewnüsse, Rosinen, Ghee (Butterfett), Kardamom", en:"Wheat flour, sugar, khoya (milk solids), grated coconut, almonds, cashews, raisins, ghee (clarified butter), cardamom"}
+  };
+  window.ATHIDHI_SWEETS = {PRODUCTS:PRODUCTS, IMAGES:IMAGES, PRICES:PRICES, INGREDIENTS:INGREDIENTS};
 
   function lang(){ return document.documentElement.getAttribute("lang") || "de"; }
   function t(de,en){ return lang()==="en" ? en : de; }
@@ -116,6 +134,7 @@
         + '<div class="pbody">'
         + '<h3>'+p.name+'</h3>'
         + '<p class="pdesc">'+t(p.de,p.en)+'</p>'
+        + (INGREDIENTS[p.id] ? '<p class="ping" style="font-size:11.5px;line-height:1.5;color:#9a7f66;margin:7px 0 0"><span style="color:#7a5c3f;font-weight:600">'+t("Zutaten","Ingredients")+':</span> '+t(INGREDIENTS[p.id].de,INGREDIENTS[p.id].en)+'</p>' : '')
         + '<div class="pmeta"><span class="pweight">'+p.w+'</span>'+priceHtml+'</div>'
         + '<div class="add-row"><div class="qty"><button type="button" data-dec>-</button>'
         + '<input type="number" min="1" value="1" aria-label="Qty"><button type="button" data-inc>+</button></div>'
