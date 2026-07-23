@@ -524,3 +524,5 @@ details.menu-list-toggle[open] summary{margin-bottom:30px;background:var(--cream
 .pcard .pnav.prev{left:8px}
 .pcard .pnav.next{right:8px}
 @media(hover:none){.pcard .pnav{display:none}}
+
+.pgallery.nutview .ptag{display:none;}
