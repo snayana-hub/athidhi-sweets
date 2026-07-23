@@ -157,7 +157,7 @@
     var n=slides.children.length; if(n<2) return;
     var idx=0;
     function go(i){ idx=Math.max(0,Math.min(n-1,i)); slides.style.transform="translateX("+(-idx*100)+"%)";
-      for(var k=0;k<dots.length;k++) dots[k].classList.toggle("active",k===idx); }
+      for(var k=0;k<dots.length;k++) dots[k].classList.toggle("active",k===idx); gal.classList.toggle("nutview", idx>0); }
     dots.forEach(function(dt,i){ dt.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); go(i); }); });
     var prev=gal.querySelector(".pnav.prev"), next=gal.querySelector(".pnav.next");
     if(prev) prev.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); go(idx-1); });
