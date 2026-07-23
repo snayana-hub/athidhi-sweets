@@ -62,7 +62,25 @@
     "kaju-katli":{de:"Cashewnüsse (Kaju), Zucker, Wasser, Ghee (optional), Rosenwasser (optional)", en:"Cashews (kaju), sugar, water, ghee (optional), rose water (optional)"},
     "gujiya":{de:"Weizenmehl, Zucker, Khoya (Milchfeststoffe), Kokosraspeln, Mandeln, Cashewnüsse, Rosinen, Ghee (Butterfett), Kardamom", en:"Wheat flour, sugar, khoya (milk solids), grated coconut, almonds, cashews, raisins, ghee (clarified butter), cardamom"}
   };
-  window.ATHIDHI_SWEETS = {PRODUCTS:PRODUCTS, IMAGES:IMAGES, PRICES:PRICES, INGREDIENTS:INGREDIENTS};
+  // ---- Nutrition per product (Durchschnittliche Naehrwerte), from Siri's label sheets. 14 values: energy,fat,saturates,carb,sugar,protein,salt x [per100, perPortion32g] ----
+  var NUTRITION = {
+    "gulab-jamun":["1800 kJ / 430 kcal","576 kJ / 138 kcal","18 g","5,8 g","8 g","2,6 g","60 g","19,2 g","45 g","14,4 g","6 g","1,9 g","0,25 g","0,08 g"],
+    "rasmalai":["1450 kJ / 345 kcal","464 kJ / 110 kcal","15 g","4,8 g","9 g","2,9 g","42 g","13,4 g","38 g","12,2 g","8 g","2,6 g","0,2 g","0,06 g"],
+    "gajar-ka-halwa":["1700 kJ / 405 kcal","544 kJ / 130 kcal","18 g","5,8 g","10 g","3,2 g","52 g","16,6 g","40 g","12,8 g","6 g","1,9 g","0,2 g","0,06 g"],
+    "mysore-pak":["2300 kJ / 550 kcal","736 kJ / 176 kcal","35 g","11,2 g","20 g","6,4 g","50 g","16 g","35 g","11,2 g","8 g","2,6 g","0,2 g","0,06 g"],
+    "kalakand":["1650 kJ / 395 kcal","528 kJ / 126 kcal","18 g","5,8 g","11 g","3,5 g","45 g","14,4 g","38 g","12,2 g","10 g","3,2 g","0,2 g","0,06 g"],
+    "kova-jamun":["1850 kJ / 440 kcal","592 kJ / 141 kcal","20 g","6,4 g","10 g","3,2 g","58 g","18,6 g","45 g","14,4 g","7 g","2,2 g","0,2 g","0,06 g"],
+    "bundi-laddu":["2100 kJ / 500 kcal","672 kJ / 160 kcal","25 g","8 g","12 g","3,8 g","60 g","19,2 g","40 g","12,8 g","8 g","2,6 g","0,2 g","0,06 g"],
+    "murukku":["2175 kJ / 520 kcal","696 kJ / 166 kcal","30 g","9,6 g","10 g","3,2 g","55 g","17,6 g","2 g","0,6 g","7 g","2,2 g","1,2 g","0,38 g"],
+    "navratan-mixture":["2250 kJ / 540 kcal","720 kJ / 173 kcal","34 g","10,9 g","8 g","2,6 g","45 g","14,4 g","5 g","1,6 g","12 g","3,8 g","1,5 g","0,48 g"],
+    "kala-jamun":["1850 kJ / 440 kcal","592 kJ / 141 kcal","20 g","6,4 g","10 g","3,2 g","58 g","18,6 g","45 g","14,4 g","7 g","2,2 g","0,2 g","0,06 g"],
+    "sev-bhujiya":["2250 kJ / 540 kcal","720 kJ / 173 kcal","34 g","10,9 g","8 g","2,6 g","45 g","14,4 g","5 g","1,6 g","12 g","3,8 g","1,5 g","0,48 g"],
+    "jalebi":["1900 kJ / 455 kcal","608 kJ / 146 kcal","15 g","4,8 g","3 g","1 g","75 g","24 g","50 g","16 g","4 g","1,3 g","0,3 g","0,1 g"],
+    "besan-laddu":["2100 kJ / 500 kcal","672 kJ / 160 kcal","28 g","9 g","14 g","4,5 g","52 g","16,6 g","35 g","11,2 g","10 g","3,2 g","0,2 g","0,06 g"],
+    "kaju-katli":["2100 kJ / 500 kcal","672 kJ / 160 kcal","28 g","9 g","5 g","1,6 g","55 g","17,6 g","40 g","12,8 g","10 g","3,2 g","0,1 g","0,03 g"],
+    "gujiya":["2050 kJ / 490 kcal","656 kJ / 157 kcal","24 g","7,7 g","11 g","3,5 g","60 g","19,2 g","32 g","10,2 g","8 g","2,6 g","0,3 g","0,1 g"]
+  };
+  window.ATHIDHI_SWEETS = {PRODUCTS:PRODUCTS, IMAGES:IMAGES, PRICES:PRICES, INGREDIENTS:INGREDIENTS, NUTRITION:NUTRITION};
 
   function lang(){ return document.documentElement.getAttribute("lang") || "de"; }
   function t(de,en){ return lang()==="en" ? en : de; }
@@ -112,6 +130,43 @@
 
   // ---- shop grid ----
   function currentFilter(){ var b=document.querySelector(".shop-filters button.active"); return b?b.getAttribute("data-filter"):"all"; }
+  function nutritionHtml(id){
+    var d=NUTRITION[id]; if(!d) return "";
+    var rows=[
+      [t("Energie","Energy"), d[0], d[1]],
+      [t("Fett","Fat"), d[2], d[3]],
+      [t("davon gesättigte Fettsäuren","of which saturates"), d[4], d[5]],
+      [t("Kohlenhydrate","Carbohydrate"), d[6], d[7]],
+      [t("davon Zucker","of which sugars"), d[8], d[9]],
+      [t("Eiweiß","Protein"), d[10], d[11]],
+      [t("Salz","Salt"), d[12], d[13]]
+    ];
+    var body="";
+    for(var i=0;i<rows.length;i++){
+      body+='<tr><th scope="row">'+rows[i][0]+'</th><td>'+rows[i][1]+'</td><td>'+rows[i][2]+'</td></tr>';
+    }
+    return '<div class="pnut-in"><table class="pnut-t">'
+      +'<tr class="pnut-h"><th scope="col">'+t("Durchschnittliche Nährwerte","Average nutritional values")+'</th>'
+      +'<th scope="col">'+t("je 100 g","per 100 g")+'</th><th scope="col">'+t("pro Portion 32 g","per portion 32 g")+'</th></tr>'
+      +body+'</table></div>';
+  }
+  function wireGallery(card){
+    var gal=card.querySelector(".pgallery"); if(!gal) return;
+    var slides=gal.querySelector(".pslides");
+    var dots=gal.querySelectorAll(".pdot");
+    var n=slides.children.length; if(n<2) return;
+    var idx=0;
+    function go(i){ idx=Math.max(0,Math.min(n-1,i)); slides.style.transform="translateX("+(-idx*100)+"%)";
+      for(var k=0;k<dots.length;k++) dots[k].classList.toggle("active",k===idx); }
+    dots.forEach(function(dt,i){ dt.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); go(i); }); });
+    var prev=gal.querySelector(".pnav.prev"), next=gal.querySelector(".pnav.next");
+    if(prev) prev.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); go(idx-1); });
+    if(next) next.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); go(idx+1); });
+    var x0=null;
+    gal.addEventListener("touchstart",function(e){ x0=e.touches[0].clientX; },{passive:true});
+    gal.addEventListener("touchend",function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>30) go(idx+(dx<0?1:-1)); x0=null; },{passive:true});
+  }
+
   function renderShop(){
     var grid=document.querySelector(".shop-grid"); if(!grid) return;
     var f=currentFilter();
@@ -122,9 +177,14 @@
     list.forEach(function(p){
       var img=IMAGES[p.id], price=priceStr(p.id);
       var card=document.createElement("article"); card.className="pcard";
-      var imgHtml = img
-        ? '<div class="pimg" style="background-image:url(\''+img+'\')"></div>'
-        : '<div class="pimg ph"><div class="ph-in"><div class="mk">'+p.name+'</div><div class="s">'+t("Foto folgt","Photo coming")+'</div></div></div>';
+      var photoSlide = img
+        ? '<div class="pslide pimg" style="background-image:url(\''+img+'\')"></div>'
+        : '<div class="pslide pimg ph"><div class="ph-in"><div class="mk">'+p.name+'</div><div class="s">'+t("Foto folgt","Photo coming")+'</div></div></div>';
+      var hasNut = !!NUTRITION[p.id];
+      var nutSlide = hasNut ? '<div class="pslide pnut">'+nutritionHtml(p.id)+'</div>' : '';
+      var dots = hasNut ? '<div class="pdots"><button type="button" class="pdot active" aria-label="'+t("Foto","Photo")+'"></button><button type="button" class="pdot" aria-label="'+t("Nährwerte","Nutrition")+'"></button></div>' : '';
+      var navs = hasNut ? '<button type="button" class="pnav prev" aria-label="'+t("Zurück","Previous")+'">\u2039</button><button type="button" class="pnav next" aria-label="'+t("Weiter","Next")+'">\u203a</button>' : '';
+      var imgHtml = '<div class="pgallery"><div class="pslides">'+photoSlide+nutSlide+'</div>'+dots+navs+'</div>';
       var tag = p.cat==="snacks" ? t("Snack","Snack") : t("Süßigkeit","Sweet");
       var priceHtml = price
         ? '<span class="pprice">'+price+'</span>'
@@ -141,7 +201,8 @@
         + '<button class="add-btn" type="button">'+t("In den Warenkorb","Add to cart")+'</button></div>'
         + '</div>';
       // add tag onto image
-      var pimg=card.querySelector(".pimg"); var tg=document.createElement("span"); tg.className="ptag"; tg.textContent=tag; pimg.appendChild(tg);
+      var galEl=card.querySelector(".pgallery"); var tg=document.createElement("span"); tg.className="ptag"; tg.textContent=tag; galEl.appendChild(tg);
+      wireGallery(card);
       var input=card.querySelector(".qty input");
       card.querySelector("[data-dec]").addEventListener("click", function(){ input.value=Math.max(1,(parseInt(input.value,10)||1)-1); });
       card.querySelector("[data-inc]").addEventListener("click", function(){ input.value=(parseInt(input.value,10)||1)+1; });
